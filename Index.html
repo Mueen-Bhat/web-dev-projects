@@ -1,128 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(to right, #f06, #9f6);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #todo-list {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        width: 300px;
+      }
+      h1 {
+        color: #333;
+      }
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 5px;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 8px;
+        padding: 8px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        position: relative;
+      }
+      .actions {
+        display: flex;
+        justify-content: space-between;
+      }
+      .delete {
+        color: red;
+        cursor: pointer;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .done {
+        background-color: #3498db;
+      }
+      .done:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="todo-list">
+      <h1>To-Do List</h1>
+      <input type="text" id="taskInput" placeholder="Add new task..." />
+      <button onclick="addTask()">Add</button>
+      <ul id="tasks"></ul>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins:wght@600&display=swap" rel="stylesheet">
-</head>
+    <script>
+      function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskText = taskInput.value.trim();
 
-<body>
-    <header>
-        <nav>
-            <div class="logo">Mueen Mohi ud din's Portfolio</div>
-            <div class="menu">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+        if (taskText !== "") {
+          const taskList = document.getElementById("tasks");
+          const newTask = document.createElement("li");
+          const actionsDiv = document.createElement("div");
+          actionsDiv.classList.add("actions");
+          newTask.innerHTML = `${taskText}`;
+          const doneButton = document.createElement("button");
+          doneButton.innerText = "Done";
+          doneButton.classList.add("done");
+          doneButton.onclick = function () {
+            markDone(this);
+          };
+          const deleteButton = document.createElement("span");
+          deleteButton.innerHTML = "❌";
+          deleteButton.classList.add("delete");
+          deleteButton.onclick = function () {
+            deleteTask(this);
+          };
+          actionsDiv.appendChild(doneButton);
+          actionsDiv.appendChild(deleteButton);
+          newTask.appendChild(actionsDiv);
+          taskList.appendChild(newTask);
+          taskInput.value = "";
+        } else {
+          alert("Please enter a task!");
+        }
+      }
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1>Welcome to My Portfolio</h1>
-                <p>Web Developer | Graphic Designer</p>
-                <a href="#contact" class="btn">Contact Me</a>
-            </div>
-        </section>
+      function deleteTask(task) {
+        task.parentNode.parentNode.remove();
+      }
 
-        <section id="about" class="about">
-            <div class="about-content">
-                <h2>About Me</h2>
-                <p>About Me
-
-                    Hello there! 👋 I'm Mueen Mohi ud din, a passionate and web development intern based in Srinagar Kashmir. With a background in Engineering, I specialize in 
-                    Web development, Graphic Designing and Video Editing. My journey in the world of Technology has equipped me with the skills to Web development , Problem solving, and Video & Graphic Designing.
-
-    
-                    
-                    
-                    
-                    In my free time, you'll often find me  exploring new technologies,
-                    
-                    I'm always open to new challenges and collaborations, so feel free to Contact Me.
-                     Let's create something amazing together!
-                    
-                    Looking forward to connecting with you.
-                    
-                    <h3>Mueen Mohi ud din Bhat</h3>
-                    
-                    .</p>
-            </div>
-        </section>
-
-        <section id="services" class="services">
-            <h2>Services</h2>
-            <div class="service-item">
-                <h3>Web Development</h3>
-                <p>Creating responsive and dynamic websites using the latest technologies.</p>
-            </div>
-            <div class="service-item">
-                <h3>Graphic Design</h3>
-                <p>Designing visually appealing graphics for various purposes.</p>
-            </div>
-           
-        </section>
-
-        <section id="projects" class="projects">
-            <h2>Projects</h2>
-            <div class="project-item">
-                <img src="img1.jpg" alt="Project 1">
-                <h2>Personal Portfolio</h2>
-                <p>Dive into my portfolio, where innovation meets technology. As a web developer intern, I leverage cutting-edge technologies to craft seamless web experiences. From responsive web development using HTML, CSS, and JavaScript to dynamic projects, each piece showcases my dedication to staying at the forefront of the tech landscape. Get ready to explore a fusion of creativity and code!.</p>
-            </div>
-            <div class="project-item">
-                <img src="img2.jpg" alt="Project 2">
-                <h2>Tic Tac Toe Game</h2>
-                <p>Digital Tic Tac Toe Game
-
-                    Step into the world of strategic delights with my Tic Tac Toe game! Crafted using the power trio of web development — HTML, CSS, and JavaScript — this digital battleground brings the timeless classic to life.
-                    
-                    
-                <p>
-                    Technologies Used:
-                    
-                    HTML/CSS/JavaScript: The foundation of the game's structure, styling, and interactivity.
-                    Algorithmic Brilliance: Behind the scenes, JavaScript algorithms drive the computer opponent, providing a challenging single-player mode.
-                    Dive into this digital arena where simplicity meets sophistication, and strategic thinking takes center stage. Play now and see if you can emerge as the ultimate Tic Tac Toe champion!
-                </p>
-                    .</p>
-            </div>
-            
-        </section>
-    </main>
-
-    <section id="contact" class="contact">
-        <h2>Contact Me</h2>
-        <form id="contact-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>&copy; 2023 Mueen Mohi ud din. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-
+      function markDone(btn) {
+        btn.parentNode.parentNode.style.textDecoration = "line-through";
+        btn.parentNode.remove();
+      }
+    </script>
+  </body>
 </html>
